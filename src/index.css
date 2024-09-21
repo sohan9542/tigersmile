@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: ArialFont;
+  src: url('../public/fonts/arial/ARIAL.TTF');
+}
+
+@font-face {
+  font-family: VerdanaPro;
+  src: url('../public/fonts/verdanapro/VerdanaPro-Regular.ttf');
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: ArialFont!important;
+}
+
+.css-cveggr-MuiListItemIcon-root{
+  min-width: 35px!important;
+}
+
+.sidebar span{
+  font-family: VerdanaPro!important;
+}
+.verdana{
+  font-family: VerdanaPro!important;
+}
+.sidebar .verdanamedim span{
+  /* font-family: VerdanaPro!important; */
+  font-weight: 600!important;
+}
+
