@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
+  const handleSignin = ()=>{
+    navigate("/home")
+  }
   return (
     <div className=" h-screen overflow-hidden grid grid-cols-1 lg:grid-cols-2">
       <img
@@ -15,7 +20,7 @@ const Login = () => {
             src="/logo/logo1.png"
             alt=""
           />
-          <form className="w-full flex flex-col gap-3">
+          <form onSubmit={handleSignin} className="w-full flex flex-col gap-3">
             <input
               type="text"
               required
