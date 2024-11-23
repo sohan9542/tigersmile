@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { users } from "../assets/users";
+
 import { toast } from "react-toastify";
 import { MyContext } from "../mangement/Mycontext";
 const taostSettings = {
@@ -16,16 +16,17 @@ const taostSettings = {
 
 };
 const Login = () => {
-  const {setAuthenticateUser} = useContext(MyContext)
+  const {setAuthenticateUser, allUsers} = useContext(MyContext)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const handleSignin = (e) => {
     e.preventDefault()
-    const finduser = users.filter((item) => item.email === email);
+    const finduser = allUsers.filter((item) => item.email === email);
     if (finduser.length > 0) {
       if (finduser[0].password === password) {
+        localStorage.setItem('skipthinkuser', JSON.stringify(finduser[0]))
         setAuthenticateUser(finduser[0])
         toast.success("Login Successfull.", taostSettings);
         setTimeout(() => {

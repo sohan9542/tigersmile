@@ -17,6 +17,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Apps, Settings } from "@mui/icons-material";
 import { MyContext } from "../mangement/Mycontext";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -80,6 +81,13 @@ export default function Navbar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  const navigate  = useNavigate()
+  const logout = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    localStorage.clear()
+    navigate("/login")
+  };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -104,6 +112,7 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
   );
 

@@ -10,9 +10,9 @@ import Classes from "./pages/Classes";
 import Activity from "./pages/Activity";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Team from "./pages/Team";
 
 function App() {
-  // defining activity for global using
 
   return (
     <ThemeProvider theme={theme}>
@@ -25,6 +25,7 @@ function App() {
           <Route path="/calender" element={<Calender />} />
           <Route path="/classes" element={<Classes />} />
           <Route path="/add" element={<Activity />} />
+          <Route path="/team" element={<Team />} />
         </Routes>
       </Router>
     </ThemeProvider>

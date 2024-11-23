@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
+
 
 import {
   AddBox,
@@ -12,6 +12,7 @@ import {
   Home,
   School,
   Update,
+  Group
 } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 
@@ -38,6 +39,11 @@ const Sidebar = () => {
       route: "/classes",
     },
     {
+      icon: <Group />,
+      text: "Team",
+      route: "/team",
+    },
+    {
       icon: <Update />,
       text: "Update",
       route: "/update",
@@ -53,7 +59,7 @@ const Sidebar = () => {
         <div className="sidebar mt-[80px]">
           <List>
             {routes.map((item, index) => (
-              <Link to={item.route}>
+              <Link key={index} to={item.route}>
                 <ListItem key={index} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>{item.icon}</ListItemIcon>
