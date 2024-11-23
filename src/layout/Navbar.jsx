@@ -16,6 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Apps, Settings } from "@mui/icons-material";
+import { MyContext } from "../mangement/Mycontext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -170,9 +171,10 @@ export default function Navbar() {
     </Menu>
   );
 
+  const { authenticateUser } = React.useContext(MyContext);
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{border:'none', boxShadow:'none'}}>
+      <AppBar position="static" style={{ border: "none", boxShadow: "none" }}>
         <Toolbar>
           <img className="w-[120px] " src="/logo/logo.png" alt="" />
 
@@ -211,17 +213,20 @@ export default function Navbar() {
             >
               <Apps />
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <div className="flex items-center gap-1">
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <p className=" capitalize">{authenticateUser?.role}</p>
+            </div>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

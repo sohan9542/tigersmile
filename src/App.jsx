@@ -4,20 +4,20 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Landing from "./pages/Landing";
 import theme from "../config/theme";
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/material/styles";
 import Calender from "./pages/Calender";
 import Classes from "./pages/Classes";
 import Activity from "./pages/Activity";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-
   // defining activity for global using
 
-
   return (
-
     <ThemeProvider theme={theme}>
       <Router>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
@@ -28,7 +28,6 @@ function App() {
         </Routes>
       </Router>
     </ThemeProvider>
-
   );
 }
 

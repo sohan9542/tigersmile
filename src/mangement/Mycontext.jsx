@@ -4,10 +4,12 @@ import { mockActivityData } from "../consistency/apiMockData";
 export const MyContext = createContext();
 
 const MyProvider = ({ children }) => {
-  const [activity, setActivity] = useState(mockActivityData)
-// console.log('activityactivity', activity)
+  const [activity, setActivity] = useState(mockActivityData);
+  const [authenticateUser, setAuthenticateUser] = useState(null);
   return (
-    <MyContext.Provider value={{ activity, setActivity }}>
+    <MyContext.Provider
+      value={{ activity, setActivity, authenticateUser, setAuthenticateUser }}
+    >
       {children}
     </MyContext.Provider>
   );
