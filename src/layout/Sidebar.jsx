@@ -12,7 +12,9 @@ import {
   Home,
   School,
   Update,
-  Group
+  Group,
+  Message,
+  LocalActivity
 } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 
@@ -23,10 +25,16 @@ const Sidebar = () => {
       text: "Add",
       route: "/add",
     },
+ 
     {
       icon: <Home />,
       text: "Home",
       route: "/home",
+    },
+    {
+      icon: <LocalActivity />,
+      text: "Activity Tracker",
+      route: "/activity-tracker",
     },
     {
       icon: <CalendarMonth />,
@@ -42,6 +50,11 @@ const Sidebar = () => {
       icon: <Group />,
       text: "Team",
       route: "/team",
+    },
+    {
+      icon: <Message />,
+      text: "Message",
+      route: "/message",
     },
     {
       icon: <Update />,
