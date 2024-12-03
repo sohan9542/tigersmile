@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import Team from "./pages/Team";
 import Message from "./pages/Message";
 import ActivityTracker from "./pages/ActivityTracker";
+import Reports from "./pages/Reports";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/message" element={<Message />} />
           <Route path="/activity-tracker" element={<ActivityTracker />} />
+          <Route path="/reports" element={<Reports />} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -1,29 +1,12 @@
 export const subjects = [
     {
-        name: 'Biology'
+        name: 'biology'
     },
     {
-        name: 'English'
+        name: 'english'
     },
     {
-        name: 'Math'
+        name: 'math'
     },
-    {
-        name: 'Computer Programming'
-    },
-    {
-        name: 'Government'
-    },
-    {
-        name: 'Economics'
-    },
-    {
-        name: 'History'
-    },
-    {
-        name: 'Theatre'
-    },
-    {
-        name: 'Spanish'
-    },
+
 ]

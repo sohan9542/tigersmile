@@ -15,6 +15,8 @@ import {
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 import { MyContext } from "../../mangement/Mycontext";
+import { subjects } from "../../assets/subjects";
+import { Select, MenuItem } from "@mui/material";
 
 const roles = ["Market", "Finance", "Development"];
 
@@ -23,7 +25,10 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, title: "", start: "", end: "" }]);
+    setRows((oldRows) => [
+      ...oldRows,
+      { id, title: "", start: "", end: "", status: "upcoming" },
+    ]);
 
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -33,7 +38,12 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" variant="outlined" startIcon={<AddIcon />} onClick={handleClick}>
+      <Button
+        color="primary"
+        variant="outlined"
+        startIcon={<AddIcon />}
+        onClick={handleClick}
+      >
         Add Activity
       </Button>
     </GridToolbarContainer>
@@ -41,7 +51,8 @@ function EditToolbar(props) {
 }
 
 export default function ActivityComponent() {
-  const { activity, setActivity } = useContext(MyContext);
+  const { activity, setActivity, notificationsData, setNotificationsData, authenticateUser } =
+    useContext(MyContext);
   React.useEffect(() => {
     console.log("activityudated", activity);
   }, [activity]);
@@ -63,12 +74,7 @@ export default function ActivityComponent() {
 
   // clicking on save this function responsible
   const handleSaveClick = (id) => () => {
-    // Change the mode to view for the specified row
-    setRowModesModel((prevModel) => ({
-      ...prevModel,
-      [id]: { mode: GridRowModes.View },
-    }));
-
+ 
     // Access the full array of rows after saving
     setRows((prevRows) => {
       const updatedRows = prevRows.map((row) => {
@@ -77,6 +83,23 @@ export default function ActivityComponent() {
           console.log("Row being saved: ", row); // Log the row data
           return { ...row }; // Ensure the row is marked as not new
         }
+
+        const newNotification = {
+          id: 1,
+          title: "New Assignment Available",
+          message: `A new assignment has been added to your ${row?.subject} course.`,
+          isRead: false,
+        };
+    
+        let notification = [...notificationsData];
+        notification.unshift(newNotification);
+        setNotificationsData([...notification]);
+        // Change the mode to view for the specified row
+        setRowModesModel((prevModel) => ({
+          ...prevModel,
+          [id]: { mode: GridRowModes.View },
+        }));
+    
         return row;
       });
 
@@ -118,11 +141,9 @@ export default function ActivityComponent() {
     return updatedRow;
   };
 
-
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
-
 
   // table header & column defined
   const columns = [
@@ -154,6 +175,36 @@ export default function ActivityComponent() {
       fontWeight: 600,
     },
     {
+      field: "subject",
+      headerName: "Subject",
+
+      flex: 1,
+      minWidth: 150,
+      editable: true,
+      fontWeight: 600,
+      renderEditCell: (params) => {
+        return (
+          <Select
+            value={params.value || ""}
+            onChange={(e) =>
+              params.api.setEditCellValue({
+                id: params.id,
+                field: params.field,
+                value: e.target.value,
+              })
+            }
+            fullWidth
+          >
+            {subjects.map((subject) => (
+              <MenuItem key={subject.name} value={subject.name}>
+                {subject.name}
+              </MenuItem>
+            ))}
+          </Select>
+        );
+      },
+    },
+    {
       field: "actions",
       type: "actions",
       headerName: "Actions",
@@ -182,7 +233,7 @@ export default function ActivityComponent() {
           ];
         }
 
-        return [
+        return authenticateUser?.permissions?.canAssignRoles ?[
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
@@ -196,7 +247,7 @@ export default function ActivityComponent() {
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
-        ];
+        ] : [];
       },
     },
   ];
@@ -217,7 +268,6 @@ export default function ActivityComponent() {
         slotProps={{
           toolbar: { setRows, setRowModesModel },
         }}
-        autoHeight
       />
     </div>
   );

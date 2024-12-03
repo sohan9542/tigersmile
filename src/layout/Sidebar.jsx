@@ -14,7 +14,8 @@ import {
   Update,
   Group,
   Message,
-  LocalActivity
+  LocalActivity,
+  ReportSharp
 } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 
@@ -35,6 +36,11 @@ const Sidebar = () => {
       icon: <LocalActivity />,
       text: "Activity Tracker",
       route: "/activity-tracker",
+    },
+    {
+      icon: <ReportSharp />,
+      text: "Reports",
+      route: "/reports",
     },
     {
       icon: <CalendarMonth />,

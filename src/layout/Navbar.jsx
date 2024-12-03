@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,7 +18,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Apps, Settings } from "@mui/icons-material";
 import { MyContext } from "../mangement/Mycontext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Drawer } from "@mui/material";
+import { notifications } from "../consistency/notifications";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -63,6 +66,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const {notificationsData} = React.useContext(MyContext)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -81,12 +85,12 @@ export default function Navbar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-  const navigate  = useNavigate()
+  const navigate = useNavigate();
   const logout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    localStorage.clear()
-    navigate("/login")
+    localStorage.clear();
+    navigate("/login");
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -181,6 +185,9 @@ export default function Navbar() {
   );
 
   const { authenticateUser } = React.useContext(MyContext);
+
+  const [drawer, setDrawer] = useState(false);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ border: "none", boxShadow: "none" }}>
@@ -203,11 +210,13 @@ export default function Navbar() {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={() => setDrawer(true)}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={notificationsData?.length} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <Link to='/team'>
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -215,6 +224,8 @@ export default function Navbar() {
             >
               <Settings />
             </IconButton>
+            </Link>
+            <Link to='/activity-tracker'>
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -222,6 +233,7 @@ export default function Navbar() {
             >
               <Apps />
             </IconButton>
+            </Link>
             <div className="flex items-center gap-1">
               <IconButton
                 size="large"
@@ -253,6 +265,20 @@ export default function Navbar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      <Drawer anchor="right" open={drawer} onClose={() => setDrawer(false)}>
+       <div className=" h-full overflow-y-auto">
+       <div className=" max-w-[300px] min-w-[300px] p-3 h-full">
+          {notificationsData?.map((item, indxe) => (
+            <div key={indxe} className=" w-full px-2 py-3 border-b ">
+              <p>
+                <b>{item.title}</b>
+              </p>
+              <p className=" text-sm">{item.message}</p>
+            </div>
+          ))}
+        </div>
+       </div>
+      </Drawer>
     </Box>
   );
 }

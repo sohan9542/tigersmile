@@ -255,7 +255,7 @@ export default function MessageComponent() {
               ></textarea>
               <div className=" w-full flex items-center justify-between px-3 z-10">
                 <div>
-                  <EmojiEmotions className=" cursor-pointer" />
+                  {/* <EmojiEmotions className=" cursor-pointer" /> */}
                 </div>
                 <div>
                   <button

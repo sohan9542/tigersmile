@@ -8,7 +8,7 @@ const Classes = () => {
     <LayoutContainer>
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-10">
         {subjects.map((item, ind) => (
-          <Link to='/calender'>
+          <Link to={`/calender?subject=${item?.name}`}>
           <Button
             variant="outlined"
             key={ind}
