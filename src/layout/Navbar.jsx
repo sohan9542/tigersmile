@@ -246,7 +246,7 @@ export default function Navbar() {
               >
                 <AccountCircle />
               </IconButton>
-              <p className=" capitalize">{authenticateUser?.role}</p>
+              <p className=" capitalize">{authenticateUser?.name}</p>
             </div>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

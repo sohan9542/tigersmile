@@ -136,6 +136,23 @@ export default function TeamComponent() {
   // table header & column defined
   const columns = [
     {
+      field: "name",
+      headerName: "Name",
+      width: 180,
+      editable: true,
+      flex: 1,
+      minWidth: 150,
+      renderEditCell: (params) => (
+        <TextField
+          value={params.value || ''}  // Use params.value for the input value
+          onChange={(event) => params.api.setEditCellValue({ id: params.id, field: params.field, value: event.target.value })}
+          placeholder="Enter Name"
+          variant="standard"
+          fullWidth
+        />
+      )
+    },
+    {
       field: "email",
       headerName: "Email",
       width: 180,
