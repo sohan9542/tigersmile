@@ -55,9 +55,6 @@ function EditToolbar(props) {
 export default function ActivityComponent() {
   const { activity, setActivity, notificationsData, setNotificationsData, authenticateUser } =
     useContext(MyContext);
-  React.useEffect(() => {
-    console.log("activityudated", activity);
-  }, [activity]);
 
   const [rows, setRows] = React.useState(activity);
   const [rowModesModel, setRowModesModel] = React.useState({});

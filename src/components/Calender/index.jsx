@@ -9,7 +9,7 @@ import { useLocation, useRoutes } from "react-router-dom";
 import { TextField } from "@mui/material";
 import { Tooltip } from "@mui/material";
 const CalenderMain = () => {
-  const { activity, setActivity } = useContext(MyContext);
+  const { activity, setActivity, authenticateUser } = useContext(MyContext);
   const query = useLocation();
   const queryParams = new URLSearchParams(query.search);
   const subject = queryParams.get("subject");
@@ -30,12 +30,16 @@ const CalenderMain = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEventClick = (clickInfo) => {
-    const filterActivity = activity?.filter(
-      (item) => item?.id === clickInfo?.event?.id
-    );
-    console.log("fsdaf", filterActivity[0]);
-    setSelectedEvent(filterActivity[0]);
-    setIsEditing(true); // Show the modal or form
+    if(authenticateUser?.permissions?.canAssignRoles){
+      const filterActivity = activity?.filter(
+        (item) => item?.id === clickInfo?.event?.id
+      );
+  
+      setSelectedEvent(filterActivity[0]);
+      setIsEditing(true); // Show the modal or form
+    }
+    
+  
   };
 
   const handleSave = () => {
