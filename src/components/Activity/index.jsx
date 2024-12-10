@@ -16,8 +16,9 @@ import {
 import { randomId } from "@mui/x-data-grid-generator";
 import { MyContext } from "../../mangement/Mycontext";
 import { subjects } from "../../assets/subjects";
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem, Tooltip } from "@mui/material";
 
+import CompTool from "../Shared/CompTool";
 const roles = ["Market", "Finance", "Development"];
 
 function EditToolbar(props) {
@@ -44,8 +45,9 @@ function EditToolbar(props) {
         startIcon={<AddIcon />}
         onClick={handleClick}
       >
-        Add Activity
+        Add Activity  
       </Button>
+     <CompTool title={'Click here to add a new event to your calendar'}/>
     </GridToolbarContainer>
   );
 }
@@ -234,19 +236,26 @@ export default function ActivityComponent() {
         }
 
         return authenticateUser?.permissions?.canAssignRoles ?[
-          <GridActionsCellItem
+          <>
+         <Tooltip title='Edit'>
+         <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
-          />,
+          />
+         </Tooltip>
+         
+          </>,
+           <Tooltip title='Delete'>
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
-          />,
+          />
+          </Tooltip>,
         ] : [];
       },
     },

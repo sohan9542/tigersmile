@@ -21,16 +21,17 @@ import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const routes = [
-    {
-      icon: <AddBox />,
-      text: "Add",
-      route: "/add",
-    },
+
  
     {
       icon: <Home />,
       text: "Home",
       route: "/home",
+    },
+    {
+      icon: <AddBox />,
+      text: "Add",
+      route: "/add",
     },
     {
       icon: <LocalActivity />,

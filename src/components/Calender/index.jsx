@@ -7,6 +7,7 @@ import listPlugin from "@fullcalendar/list";
 import { MyContext } from "../../mangement/Mycontext";
 import { useLocation, useRoutes } from "react-router-dom";
 import { TextField } from "@mui/material";
+import { Tooltip } from "@mui/material";
 const CalenderMain = () => {
   const { activity, setActivity } = useContext(MyContext);
   const query = useLocation();
@@ -38,9 +39,32 @@ const CalenderMain = () => {
   };
 
   const handleSave = () => {
-    const updatedArray = activity.map((item) =>
-      item.id === selectedEvent.id ? selectedEvent : item
-    );
+    const updatedArray = activity.map((item) => {
+      if (item.id === selectedEvent.id) {
+        // Update the edited event
+        return selectedEvent;
+      } else {
+        // Check for overlap with the edited event
+        const isOverlapping =
+          new Date(item.start) < new Date(selectedEvent.end) &&
+          new Date(item.end) > new Date(selectedEvent.start);
+  
+        if (isOverlapping) {
+          // Reschedule the overlapping event
+          const newStart = new Date(selectedEvent.end);
+          const newEnd = new Date(newStart);
+          newEnd.setMinutes(newEnd.getMinutes() + (item.duration || 60)); // Adjust based on a default duration or existing duration
+  
+          return {
+            ...item,
+            start: newStart,
+            end: newEnd,
+          };
+        }
+      }
+      return item; // No changes for non-overlapping events
+    });
+  
     setActivity([...updatedArray]);
     setIsEditing(false); // Close the modal or form
   };
@@ -146,10 +170,14 @@ const CalenderMain = () => {
 
 function renderEventContent(eventInfo) {
   return (
-    <>
-      <b className=" cursor-pointer">{eventInfo.timeText}</b>
-      <i className=" cursor-pointer">{eventInfo.event.title}</i>
-    </>
+    <Tooltip title='Click to edit the event' placement="top">
+   <div className="flex items-center justify-center flex-col gap-2 h-full px-2">
+   
+      <b className=" cursor-pointer text-center">{eventInfo.timeText}</b>
+      <i className=" cursor-pointer text-center">{eventInfo.event.title}</i>
+  
+   </div>
+   </Tooltip>
   );
 }
 

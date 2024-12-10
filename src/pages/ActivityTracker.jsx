@@ -3,6 +3,7 @@ import LayoutContainer from "../layout/LayoutContainer";
 import { MyContext } from "../mangement/Mycontext";
 import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
+import { Tooltip } from "@mui/material";
 const ActivityTracker = () => {
   const { activity, setActivity, currentActivity, setCurrentActivity } =
     useContext(MyContext);
@@ -158,19 +159,23 @@ const ActivityTracker = () => {
             {item.status !== "completed" && item.status !== "upcoming" && (
               <>
                 {item.status !== "in progress" ? (
+                    <Tooltip title='Start Activity'>
                   <button
                     onClick={() => startActivity(item)}
                     className="px-3 py-2 text-sm bg-[#D2D9DE]"
                   >
                     Start
                   </button>
+                  </Tooltip>
                 ) : (
+                  <Tooltip title='End Activity'>
                   <button
                     onClick={() => stopActivity(item)}
                     className="px-3 py-2 text-sm bg-red-500 text-white"
                   >
                     End
                   </button>
+                  </Tooltip>
                 )}
               </>
             )}
