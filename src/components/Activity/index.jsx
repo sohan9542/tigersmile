@@ -13,19 +13,18 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import { randomId } from "@mui/x-data-grid-generator";
-import { MyContext } from "../../context/AppContext";
+import { MyContext } from "../../context/MyContext";
 import { subjects } from "../../assets/subjects";
 import { Select, MenuItem, Tooltip } from "@mui/material";
+import { createId } from "../../helpers";
 
 import CompTool from "../Shared/CompTool";
-const roles = ["Market", "Finance", "Development"];
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
-    const id = randomId();
+    const id = createId();
     setRows((oldRows) => [
       ...oldRows,
       { id, title: "", start: "", end: "", status: "upcoming" },
@@ -73,13 +72,10 @@ export default function ActivityComponent() {
 
   // clicking on save this function responsible
   const handleSaveClick = (id) => () => {
- 
     // Access the full array of rows after saving
     setRows((prevRows) => {
       const updatedRows = prevRows.map((row) => {
         if (row.id === id) {
-          // Log the row being saved
-          console.log("Row being saved: ", row); // Log the row data
           return { ...row }; // Ensure the row is marked as not new
         }
 
@@ -89,7 +85,7 @@ export default function ActivityComponent() {
           message: `A new assignment has been added to your ${row?.subject} course.`,
           isRead: false,
         };
-    
+
         let notification = [...notificationsData];
         notification.unshift(newNotification);
         setNotificationsData([...notification]);
@@ -98,7 +94,7 @@ export default function ActivityComponent() {
           ...prevModel,
           [id]: { mode: GridRowModes.View },
         }));
-    
+
         return row;
       });
 
@@ -132,7 +128,6 @@ export default function ActivityComponent() {
       const updatedRows = prevRows.map((row) =>
         row.id === newRow.id ? updatedRow : row
       );
-      console.log("Updated Rows on Save: ", updatedRows); // Log the updated rows
       setActivity([...updatedRows]);
       return updatedRows;
     });
@@ -215,6 +210,7 @@ export default function ActivityComponent() {
         if (isInEditMode) {
           return [
             <GridActionsCellItem
+              key={`${id}-save`}
               icon={<SaveIcon />}
               label="Save"
               sx={{
@@ -223,6 +219,7 @@ export default function ActivityComponent() {
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
+              key={`${id}-cancel`}
               icon={<CancelIcon />}
               label="Cancel"
               className="textPrimary"
@@ -232,28 +229,27 @@ export default function ActivityComponent() {
           ];
         }
 
-        return authenticateUser?.permissions?.canAssignRoles ?[
-          <>
-         <Tooltip title='Edit'>
-         <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />
-         </Tooltip>
-         
-          </>,
-           <Tooltip title='Delete'>
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />
-          </Tooltip>,
-        ] : [];
+        return authenticateUser?.permissions?.canAssignRoles
+          ? [
+              <Tooltip title="Edit" key={`${id}-edit`}>
+                <GridActionsCellItem
+                  icon={<EditIcon />}
+                  label="Edit"
+                  className="textPrimary"
+                  onClick={handleEditClick(id)}
+                  color="inherit"
+                />
+              </Tooltip>,
+              <Tooltip title="Delete" key={`${id}-delete`}>
+                <GridActionsCellItem
+                  icon={<DeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />
+              </Tooltip>,
+            ]
+          : [];
       },
     },
   ];

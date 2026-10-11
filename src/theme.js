@@ -1,16 +1,14 @@
-// src/theme.js
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#fffff', // Define your primary color here
+      main: "#ffffff",
     },
     secondary: {
-      main: '#dc004e', // Define your secondary color here
+      main: "#dc004e",
     },
   },
-
 });
 
 export default theme;

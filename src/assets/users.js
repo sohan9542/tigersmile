@@ -1,8 +1,8 @@
-import { randomId } from "@mui/x-data-grid-generator";
+import { createId } from "../helpers";
 
 export const users = [
   {
-    id: randomId(),
+    id: createId(),
     role: "manager",
     name: "Abrahamn Linkon",
     email: "manager@gmail.com",
@@ -17,7 +17,7 @@ export const users = [
     },
   },
   {
-    id: randomId(),
+    id: createId(),
     role: "admin",
     name: "Phil phoden",
     email: "admin@gmail.com",
@@ -32,7 +32,7 @@ export const users = [
     },
   },
   {
-    id: randomId(),
+    id: createId(),
     role: "observer",
     name: "Kevin DeBruina",
     email: "observer@gmail.com",
@@ -47,7 +47,7 @@ export const users = [
     },
   },
   {
-    id: randomId(),
+    id: createId(),
     role: "viewer",
     name: "Leonel Messi",
     email: "viewer@gmail.com",
@@ -62,7 +62,7 @@ export const users = [
     },
   },
   {
-    id: randomId(),
+    id: createId(),
     role: "support",
     name: "Cristino Ronaldo",
     email: "support@gmail.com",
@@ -77,7 +77,7 @@ export const users = [
     },
   },
   {
-    id: randomId(),
+    id: createId(),
     role: "focus",
     name: "Serjio Buskets",
     email: "focus@gmail.com",

@@ -1,4 +1,3 @@
-import React from "react";
 import LayoutContainer from "../layout/LayoutContainer";
 import ActivityComponent from "../components/Activity";
 

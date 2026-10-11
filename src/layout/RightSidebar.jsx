@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { MyContext } from "../context/AppContext";
+import { MyContext } from "../context/MyContext";
 import { getTodayData, getUpComingData } from "../helpers";
 
 const RightSidebar = () => {
@@ -11,6 +11,7 @@ const RightSidebar = () => {
     const findUpcoming = getUpComingData(activity);
     setTodayData(findTodayData);
     setUpcomingData(findUpcoming);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- match prior mount-only sidebar lists
   }, []);
 
   return (

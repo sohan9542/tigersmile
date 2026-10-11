@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { MyContext } from "../../context/AppContext";
+import { useContext } from "react";
+import { MyContext } from "../../context/MyContext";
 
 const ActivityAndMessage = () => {
   const { activity } = useContext(MyContext);
@@ -36,7 +36,7 @@ const ActivityAndMessage = () => {
     <div className="w-full px-5 mt-[50px] grid grid-cols-1  gap-20 lg:grid-cols-4">
       <div className=" lg:col-span-3">
         <h1 className=" font-semibold mb-[30px] text-[26px]">
-          Today's Activity
+          Today&apos;s Activity
         </h1>
         {activitiesToday?.map((item, ind) => (
           <div key={ind} className="mt-[10px] w-full flex items-center gap-20">

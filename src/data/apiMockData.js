@@ -1,13 +1,12 @@
-import { randomId } from "@mui/x-data-grid-generator";
-
-import { startOfWeek, addDays, addHours } from "date-fns";
+import { startOfWeek, addHours } from "date-fns";
+import { createId } from "../helpers";
 
 const today = new Date();
 const weekStart = startOfWeek(today, { weekStartsOn: 0 }); // Week starts on Sunday
 
 export const mockActivityData = [
   {
-    id: randomId(),
+    id: createId(),
     title: "Venderbilit Prompt Engineering Course",
     start: addHours(weekStart, 1), // Monday, starts at hour 1
     end: addHours(weekStart, 3), // Ends at hour 3
@@ -15,7 +14,7 @@ export const mockActivityData = [
     subject: "math",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "Omni Dental (see notes)",
     start: addHours(weekStart, 4), // Monday, starts at hour 4
     end: addHours(weekStart, 6), // Ends at hour 6
@@ -23,7 +22,7 @@ export const mockActivityData = [
     subject: "biology",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "SAS Summer 2024 intern information Session",
     start: addHours(weekStart, 7), // Monday, starts at hour 7
     end: addHours(weekStart, 9), // Ends at hour 9
@@ -31,7 +30,7 @@ export const mockActivityData = [
     subject: "english",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "Inferrar Tech Engineering Course",
     start: addHours(weekStart, 10), // Monday, starts at hour 10
     end: addHours(weekStart, 12), // Ends at hour 12
@@ -39,7 +38,7 @@ export const mockActivityData = [
     subject: "math",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "Hinda Medition All notes",
     start: addHours(weekStart, 13), // Monday, starts at hour 13
     end: addHours(weekStart, 15), // Ends at hour 15
@@ -47,7 +46,7 @@ export const mockActivityData = [
     subject: "english",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "Japanise All notes",
     start: addHours(weekStart, 16), // Monday, starts at hour 16
     end: addHours(weekStart, 18), // Ends at hour 18
@@ -55,7 +54,7 @@ export const mockActivityData = [
     subject: "biology",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "MAF Winter 2024",
     start: addHours(weekStart, 19), // Monday, starts at hour 19
     end: addHours(weekStart, 21), // Ends at hour 21
@@ -63,7 +62,7 @@ export const mockActivityData = [
     subject: "math",
   },
   {
-    id: randomId(),
+    id: createId(),
     title: "MAF COLD 2024",
     start: addHours(weekStart, 22), // Monday, starts at hour 22
     end: addHours(weekStart, 24), // Ends at hour 24

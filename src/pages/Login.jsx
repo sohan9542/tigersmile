@@ -1,42 +1,31 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
 import { toast } from "react-toastify";
-import { MyContext } from "../context/AppContext";
-const taostSettings = {
-  position: "top-right",
-  autoClose: 3000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
+import { MyContext } from "../context/MyContext";
+import { toastSettings } from "../constants/toast";
 
-};
 const Login = () => {
-  const {setAuthenticateUser, allUsers} = useContext(MyContext)
+  const { setAuthenticateUser, allUsers } = useContext(MyContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const handleSignin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const finduser = allUsers.filter((item) => item.email === email);
     if (finduser.length > 0) {
       if (finduser[0].password === password) {
-        localStorage.setItem('skipthinkuser', JSON.stringify(finduser[0]))
-        setAuthenticateUser(finduser[0])
-        toast.success("Login Successfull.", taostSettings);
+        localStorage.setItem("skipthinkuser", JSON.stringify(finduser[0]));
+        setAuthenticateUser(finduser[0]);
+        toast.success("Login Successfull.", toastSettings);
         setTimeout(() => {
           navigate("/home");
         }, 2000);
       } else {
-        toast.error("Incorrect Password", taostSettings);
+        toast.error("Incorrect Password", toastSettings);
       }
     } else {
-      toast.error("No user found", taostSettings);
+      toast.error("No user found", toastSettings);
     }
   };
 
@@ -63,7 +52,7 @@ const Login = () => {
               className="w-full py-2 px-3 outline-none border lg:w-[400px]"
             />
             <input
-              type="text"
+              type="password"
               required
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"

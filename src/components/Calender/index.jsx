@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import { MyContext } from "../../context/AppContext";
-import { useLocation, useRoutes } from "react-router-dom";
-import { TextField } from "@mui/material";
-import { Tooltip } from "@mui/material";
+import { MyContext } from "../../context/MyContext";
+import { useLocation } from "react-router-dom";
+import { TextField, Tooltip } from "@mui/material";
+
 const CalenderMain = () => {
   const { activity, setActivity, authenticateUser } = useContext(MyContext);
   const query = useLocation();
@@ -123,7 +123,6 @@ const CalenderMain = () => {
                 value={selectedEvent?.title}
                 onChange={(e) => handleInputChange("title", e.target.value)}
                 id="outlined-basic"
-                variant="outlined"
               />
             </label>
             <label className="flex font-semibold items-center gap-3">

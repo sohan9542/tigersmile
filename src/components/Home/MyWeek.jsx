@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { MyContext } from "../../context/AppContext";
-import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
+import { MyContext } from "../../context/MyContext";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -17,9 +16,11 @@ const CustomTooltip = ({ active, payload }) => {
   }
   return null;
 };
+
 const MyWeek = () => {
   const { activity } = useContext(MyContext);
   const [thisWeekData, setThisWeekData] = useState([]);
+
   const getStatusCounts = (data) => {
     const statusCounts = data.reduce((acc, event) => {
       acc[event.status] = (acc[event.status] || 0) + 1;
@@ -33,9 +34,10 @@ const MyWeek = () => {
   };
 
   useEffect(() => {
+    // Preserve original mount-only summary behaviour.
     const statusSummary = getStatusCounts(activity);
-    console.log('s', statusSummary)
     setThisWeekData(statusSummary);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- match prior mount-only chart data
   }, []);
 
   return (

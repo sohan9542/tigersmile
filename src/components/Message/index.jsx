@@ -1,20 +1,13 @@
 import * as React from "react";
-import { useState } from "react";
-import { useContext } from "react";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import { Email, EmojiEmotions } from "@mui/icons-material";
+import { useState, useContext } from "react";
+import { Email } from "@mui/icons-material";
 import {
-  GridRowModes,
   DataGrid,
-  GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import { randomId } from "@mui/x-data-grid-generator";
-import { MyContext } from "../../context/AppContext";
-import { TextField, Select, MenuItem } from "@mui/material";
-import { useLocation, useParams, useRoutes } from "react-router-dom";
+import { MyContext } from "../../context/MyContext";
+import { TextField } from "@mui/material";
 
 export default function MessageComponent() {
   const { allUsers, setAllUsers, authenticateUser } = useContext(MyContext);
@@ -22,68 +15,19 @@ export default function MessageComponent() {
   const [rows, setRows] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
-  // this function handle the event of editing stop
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
 
-  // when we click on edit button this function happens
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  // clicking on save this function responsible
-  const handleSaveClick = (id) => () => {
-    // Change the mode to view for the specified row
-    setRowModesModel((prevModel) => ({
-      ...prevModel,
-      [id]: { mode: GridRowModes.View },
-    }));
-
-    // Access the full array of rows after saving
-    setRows((prevRows) => {
-      const updatedRows = prevRows.map((row) => {
-        if (row.id === id) {
-          // Log the row being saved
-          console.log("Row being saved: ", row); // Log the row data
-          return { ...row }; // Ensure the row is marked as not new
-        }
-        return row;
-      });
-
-      return updatedRows;
-    });
-  };
-
-  // for deleteing we are using this
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
-
-  // for cancel the edit mode we are using this
-  const handleCancelClick = (id) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
-  };
-  // after updateing a row this function get called
   const processRowUpdate = (newRow) => {
-    // Here, ensure you're including all necessary fields
     const updatedRow = { ...newRow, isNew: false };
 
     setRows((prevRows) => {
       const updatedRows = prevRows.map((row) =>
         row.id === newRow.id ? updatedRow : row
       );
-      console.log("Updated Rows on Save: ", updatedRows); // Log the updated rows
       setAllUsers([...updatedRows]);
       return updatedRows;
     });
@@ -95,7 +39,6 @@ export default function MessageComponent() {
     setRowModesModel(newRowModesModel);
   };
 
-  // table header & column defined
   const columns = [
     {
       field: "email",
@@ -106,7 +49,7 @@ export default function MessageComponent() {
       minWidth: 150,
       renderEditCell: (params) => (
         <TextField
-          value={params.value || ""} // Use params.value for the input value
+          value={params.value || ""}
           onChange={(event) =>
             params.api.setEditCellValue({
               id: params.id,
@@ -120,7 +63,6 @@ export default function MessageComponent() {
         />
       ),
     },
-
     {
       field: "role",
       headerName: "Role",
@@ -153,11 +95,8 @@ export default function MessageComponent() {
     const filterusers = allUsers?.filter(
       (item) => item?.email !== authenticateUser?.email
     );
-    console.log(filterusers, authenticateUser);
     setRows([...filterusers]);
   }, [authenticateUser, allUsers]);
-
-  //   ---------------------message ---------------------
 
   const [messageEmail, setMessageEmail] = useState(null);
   const sendMesasge = (email) => {
@@ -185,17 +124,15 @@ export default function MessageComponent() {
   const [messages, setMessages] = useState(msgs);
   const [newMessage, setNewMessage] = useState("");
   const sendNewMessage = () => {
-    let copyMsg = [];
     const newMsg = {
       id: messages.length,
       type: "me",
       message: newMessage,
     };
-    console.log(messages);
-    copyMsg = [...messages, newMsg];
-    setMessages([...copyMsg]);
+    setMessages([...messages, newMsg]);
     setNewMessage("");
   };
+
   return (
     <div className="w-[380px] lg:w-full">
       {!messageEmail ? (
@@ -228,10 +165,12 @@ export default function MessageComponent() {
                     <p>{item.message}</p>
                   </div>
                 ) : (
-                 <div className="flex flex-col pb-2  justify-end w-full items-end ">
-                   <p >{item.message}</p>
-                 </div>
-                
+                  <div
+                    key={indx}
+                    className="flex flex-col pb-2  justify-end w-full items-end "
+                  >
+                    <p>{item.message}</p>
+                  </div>
                 )
               )}
             </div>
@@ -247,16 +186,13 @@ export default function MessageComponent() {
                 id=""
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-              
                 rows={5}
                 cols={5}
                 required
                 className=" border p-2 w-full"
               ></textarea>
               <div className=" w-full flex items-center justify-between px-3 z-10">
-                <div>
-                  {/* <EmojiEmotions className=" cursor-pointer" /> */}
-                </div>
+                <div />
                 <div>
                   <button
                     type="submit"

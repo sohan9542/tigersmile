@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import LayoutContainer from "../layout/LayoutContainer";
-import { MyContext } from "../context/AppContext";
-import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
+import { MyContext } from "../context/MyContext";
 import { DataGrid } from "@mui/x-data-grid";
 import { Tooltip } from "@mui/material";
+import { formatToLocalTime, getCurrentWeekActivities } from "../helpers";
+
 const ActivityTracker = () => {
   const { activity, setActivity, currentActivity, setCurrentActivity } =
     useContext(MyContext);
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [, setElapsedTime] = useState(0);
 
   const timerRef = useRef(null);
 
@@ -49,7 +50,7 @@ const ActivityTracker = () => {
     stopTimer(); // Stop the timer
   };
 
-  const startActivity = (act, idx) => {
+  const startActivity = (act) => {
     const now = new Date(); // Get current date and time
 
     const updatedActivities = activity.map((item) => {
@@ -70,40 +71,15 @@ const ActivityTracker = () => {
   };
 
   useEffect(() => {
-    // Cleanup on component unmount
-    return () => clearInterval(timerRef.current);
+    const timerId = timerRef.current;
+    return () => clearInterval(timerId);
   }, []);
 
-
-
   const [todayData, setTodayData] = useState([]);
-  const currentWeekActivities = (data) => {
-    const now = new Date();
-    const weekStart = startOfWeek(now, { weekStartsOn: 0 }); // Sunday as start
-    const weekEnd = endOfWeek(now, { weekStartsOn: 0 }); // Saturday as end
 
-    return data.filter((event) =>
-      isWithinInterval(event.start, { start: weekStart, end: weekEnd })
-    );
-  };
   useEffect(() => {
-    const dataToday = currentWeekActivities(activity);
-    setTodayData(dataToday);
+    setTodayData(getCurrentWeekActivities(activity));
   }, [activity]);
-
-  const formatToLocalTime = (isoDateString) => {
-    const date = new Date(isoDateString);
-    return date.toLocaleString("en-US", {
-      weekday: "long", // e.g., Monday
-      year: "numeric", // e.g., 2024
-      month: "long", // e.g., December
-      day: "numeric", // e.g., 2
-      hour: "2-digit", // e.g., 07 or 7
-      minute: "2-digit", // e.g., 31
-      second: "2-digit", // e.g., 52
-      hour12: true, // Optional: Display time in 12-hour format (AM/PM)
-    });
-  };
 
   const columns = [
     {
@@ -159,22 +135,22 @@ const ActivityTracker = () => {
             {item.status !== "completed" && item.status !== "upcoming" && (
               <>
                 {item.status !== "in progress" ? (
-                    <Tooltip title='Start Activity'>
-                  <button
-                    onClick={() => startActivity(item)}
-                    className="px-3 py-2 text-sm bg-[#D2D9DE]"
-                  >
-                    Start
-                  </button>
+                  <Tooltip title="Start Activity">
+                    <button
+                      onClick={() => startActivity(item)}
+                      className="px-3 py-2 text-sm bg-[#D2D9DE]"
+                    >
+                      Start
+                    </button>
                   </Tooltip>
                 ) : (
-                  <Tooltip title='End Activity'>
-                  <button
-                    onClick={() => stopActivity(item)}
-                    className="px-3 py-2 text-sm bg-red-500 text-white"
-                  >
-                    End
-                  </button>
+                  <Tooltip title="End Activity">
+                    <button
+                      onClick={() => stopActivity(item)}
+                      className="px-3 py-2 text-sm bg-red-500 text-white"
+                    >
+                      End
+                    </button>
                   </Tooltip>
                 )}
               </>
@@ -191,15 +167,14 @@ const ActivityTracker = () => {
         <h1 className="text-[26px] mb-5 font-semibold text-center">
           Activity Tracker
         </h1>
-  
+
         <div className="flex flex-col items-center justify-center gap-3 w-full my-5">
           <h2>Current Activity: {currentActivity}</h2>
-   
         </div>
         <p className=" font-bold text-2xl border-b pb-2 mb-4">
-              List of activities This Week
-            </p>
-      
+          List of activities This Week
+        </p>
+
         <DataGrid
           rows={todayData}
           columns={columns}

@@ -1,5 +1,3 @@
-// // this will contain navbar & sidebar authenticated layout
-
 import Sidebar from "./Sidebar";
 
 import * as React from "react";

@@ -13,18 +13,17 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import { randomId } from "@mui/x-data-grid-generator";
-import { MyContext } from "../../context/AppContext";
+import { MyContext } from "../../context/MyContext";
 import { TextField, Select, MenuItem } from "@mui/material";
+import { createId } from "../../helpers";
 
 function EditToolbar(props) {
   const { authenticateUser } = useContext(MyContext);
 
-
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
-    const id = randomId();
+    const id = createId();
     setRows((oldRows) => [
       ...oldRows,
       {
@@ -32,8 +31,8 @@ function EditToolbar(props) {
         title: "Enter title",
         start: "Enter start",
         end: "Enter end",
-        isNew: true
-      }
+        isNew: true,
+      },
     ]);
 
     setRowModesModel((oldModel) => ({
@@ -82,8 +81,6 @@ export default function TeamComponent() {
     setRows((prevRows) => {
       const updatedRows = prevRows.map((row) => {
         if (row.id === id) {
-          // Log the row being saved
-          console.log("Row being saved: ", row); // Log the row data
           return { ...row }; // Ensure the row is marked as not new
         }
         return row;
@@ -119,7 +116,6 @@ export default function TeamComponent() {
       const updatedRows = prevRows.map((row) =>
         row.id === newRow.id ? updatedRow : row
       );
-      console.log("Updated Rows on Save: ", updatedRows); // Log the updated rows
       setAllUsers([...updatedRows]);
       return updatedRows;
     });
@@ -226,7 +222,7 @@ export default function TeamComponent() {
         if (isInEditMode) {
           return [
             <GridActionsCellItem
-              key={id}
+              key={`${id}-save`}
               icon={<SaveIcon />}
               label="Save"
               sx={{
@@ -235,7 +231,7 @@ export default function TeamComponent() {
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
-              key={id}
+              key={`${id}-cancel`}
               icon={<CancelIcon />}
               label="Cancel"
               className="textPrimary"
@@ -245,33 +241,35 @@ export default function TeamComponent() {
           ];
         }
 
-        return authenticateUser?.permissions?.canAssignRoles ? [
-          <GridActionsCellItem
-            key={id}
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            key={id}
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
-        ] : [];
+        return authenticateUser?.permissions?.canAssignRoles
+          ? [
+              <GridActionsCellItem
+                key={`${id}-edit`}
+                icon={<EditIcon />}
+                label="Edit"
+                className="textPrimary"
+                onClick={handleEditClick(id)}
+                color="inherit"
+              />,
+              <GridActionsCellItem
+                key={`${id}-delete`}
+                icon={<DeleteIcon />}
+                label="Delete"
+                onClick={handleDeleteClick(id)}
+                color="inherit"
+              />,
+            ]
+          : [];
       },
     },
   ];
 
-
   React.useEffect(() => {
-    const filterusers = allUsers?.filter((item) => item?.email !== authenticateUser?.email)
-    console.log(filterusers, authenticateUser)
-    setRows([...filterusers])
-  }, [authenticateUser, allUsers])
+    const filterusers = allUsers?.filter(
+      (item) => item?.email !== authenticateUser?.email
+    );
+    setRows([...filterusers]);
+  }, [authenticateUser, allUsers]);
 
   return (
     <div className="w-[380px] lg:w-full">

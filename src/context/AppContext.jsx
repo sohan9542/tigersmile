@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { createContext } from "react";
+import { useState, useEffect } from "react";
 import { mockActivityData } from "../data/apiMockData";
 import { users } from "../assets/users";
 import { notifications } from "../data/notifications";
-
-export const MyContext = createContext();
+import { MyContext } from "./MyContext";
 
 const MyProvider = ({ children }) => {
   const [activity, setActivity] = useState(mockActivityData);
@@ -18,12 +16,11 @@ const MyProvider = ({ children }) => {
     const user = localStorage.getItem("skipthinkuser");
     if (user) {
       setAuthenticateUser(JSON.parse(user));
-    } else {
-      if (authenticateUser !== null) {
-        window.location.href = "/login";
-        setAuthenticateUser(null);
-      }
+    } else if (authenticateUser !== null) {
+      window.location.href = "/login";
+      setAuthenticateUser(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- restore session once on mount
   }, []);
 
   return (

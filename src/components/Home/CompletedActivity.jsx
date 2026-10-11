@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext  } from "react";
-import { MyContext } from "../../context/AppContext";
+import { useState, useEffect, useContext  } from "react";
+import { MyContext } from "../../context/MyContext";
 const CompletedActivity = () => {
   const [completedData, setCompletedData] = useState([]);
   const { activity } = useContext(MyContext);
   useEffect(() => {
     const compData = activity.filter((item) => item?.status === "completed");
     setCompletedData(compData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- match prior mount-only count
   }, []);
 
   return (

@@ -1,26 +1,17 @@
-import React,{useState, useEffect, useContext} from "react";
-import { MyContext } from "../../context/AppContext";
-import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
+import { useState, useEffect, useContext } from "react";
+import { MyContext } from "../../context/MyContext";
+import { getCurrentWeekActivities } from "../../helpers";
 
 const WeekActivity = () => {
-  
-  const {activity} = useContext(MyContext)
+  const { activity } = useContext(MyContext);
   const [thisWeekData, setThisWeekData] = useState([]);
 
-  const currentWeekActivities = (data) => {
-    const now = new Date();
-    const weekStart = startOfWeek(now, { weekStartsOn: 0 }); // Sunday as start
-    const weekEnd = endOfWeek(now, { weekStartsOn: 0 }); // Saturday as end
-
-    return data.filter((event) =>
-      isWithinInterval(event.start, { start: weekStart, end: weekEnd })
-    );
-  };
-
   useEffect(() => {
-    const weekData = currentWeekActivities(activity);
-    setThisWeekData(weekData);
+    // Preserve original mount-only count behaviour.
+    setThisWeekData(getCurrentWeekActivities(activity));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- match prior mount-only week count
   }, []);
+
   return (
     <div className="w-full flex flex-col items-center">
       <h1 className="text-[26px] font-semibold text-center">
