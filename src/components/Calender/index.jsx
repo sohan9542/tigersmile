@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import { MyContext } from "../../mangement/Mycontext";
+import { MyContext } from "../../context/AppContext";
 import { useLocation, useRoutes } from "react-router-dom";
 import { TextField } from "@mui/material";
 import { Tooltip } from "@mui/material";

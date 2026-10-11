@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext  } from "react";
-import { MyContext } from "../../mangement/Mycontext";
+import { MyContext } from "../../context/AppContext";
 const CompletedActivity = () => {
   const [completedData, setCompletedData] = useState([]);
   const { activity } = useContext(MyContext);

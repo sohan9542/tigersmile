@@ -17,10 +17,10 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Apps, Settings } from "@mui/icons-material";
-import { MyContext } from "../mangement/Mycontext";
+import { MyContext } from "../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import { Drawer } from "@mui/material";
-import { notifications } from "../consistency/notifications";
+import { notifications } from "../data/notifications";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

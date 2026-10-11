@@ -1,5 +1,5 @@
 import React,{useState, useEffect, useContext} from "react";
-import { MyContext } from "../../mangement/Mycontext";
+import { MyContext } from "../../context/AppContext";
 import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 
 const WeekActivity = () => {

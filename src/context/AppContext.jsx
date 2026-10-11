@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createContext } from "react";
-import { mockActivityData } from "../consistency/apiMockData";
+import { mockActivityData } from "../data/apiMockData";
 import { users } from "../assets/users";
-import { notifications } from "../consistency/notifications";
+import { notifications } from "../data/notifications";
 
 export const MyContext = createContext();
 

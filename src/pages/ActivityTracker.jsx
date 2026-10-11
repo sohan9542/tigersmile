@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import LayoutContainer from "../layout/LayoutContainer";
-import { MyContext } from "../mangement/Mycontext";
+import { MyContext } from "../context/AppContext";
 import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 import { DataGrid } from "@mui/x-data-grid";
 import { Tooltip } from "@mui/material";

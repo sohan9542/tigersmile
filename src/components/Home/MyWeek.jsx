@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { MyContext } from "../../mangement/Mycontext";
+import { MyContext } from "../../context/AppContext";
 import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];

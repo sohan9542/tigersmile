@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { toast } from "react-toastify";
-import { MyContext } from "../mangement/Mycontext";
+import { MyContext } from "../context/AppContext";
 const taostSettings = {
   position: "top-right",
   autoClose: 3000,

@@ -4,7 +4,7 @@ import ActivityAndMessage from "../components/Home/ActivityAndMessage";
 import MyWeek from "../components/Home/MyWeek";
 import WeekActivity from "../components/Home/WeekActivity";
 import CompletedActivity from "../components/Home/CompletedActivity";
-import { MyContext } from "../mangement/Mycontext";
+import { MyContext } from "../context/AppContext";
 
 const Home = () => {
   const { authenticateUser } = useContext(MyContext);

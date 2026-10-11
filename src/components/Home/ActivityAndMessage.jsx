@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { MyContext } from "../../mangement/Mycontext";
+import { MyContext } from "../../context/AppContext";
 
 const ActivityAndMessage = () => {
   const { activity } = useContext(MyContext);

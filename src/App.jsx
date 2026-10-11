@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Landing from "./pages/Landing";
-import theme from "../config/theme";
+import theme from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 import Calender from "./pages/Calender";
 import Classes from "./pages/Classes";
